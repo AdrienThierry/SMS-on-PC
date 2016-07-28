@@ -1,5 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  // --------------------------------------------------
+  // Phone Ip address form
+  // --------------------------------------------------
+  div#ipAddressForm.col-md-6
+    form(method="post")
+      div.form-group
+        label(for="ipAddressField") Phone IP address
+        input#ipAddressField.form-control(type="text", name="ipAddress")
+      button.btn.btn-primary(type="button") OK
