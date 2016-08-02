@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -33,6 +35,14 @@ public class MainActivityFragment extends Fragment {
 
         // Show IP address
         ipAddress.setText(ipString);
+
+        // Broadcast service using mDNS
+        try {
+            Thread t = new Discovery((MainActivity)getActivity());
+            t.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return view;
     }
