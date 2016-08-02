@@ -7,13 +7,3 @@ block content
   div.alert.alert-danger(role="alert", ng-show="errorVisible")
     span.glyphicon.glyphicon-exclamation-sign &nbsp;
     | {{errorMsg}}
-
-  // --------------------------------------------------
-  // Phone Ip address form
-  // --------------------------------------------------
-  div.col-md-6
-    form(name="ipAddressForm", ng-submit="submitIp()", novalidate)
-      div.form-group(ng-class="{'has-error': ipAddressForm.$invalid && ipAddressForm.$dirty}")
-        label(for="ipAddressField") Enter phone IP address
-        input#ipAddressField.form-control(type="text", ng-model="ipAddress", ng-pattern='/^([0-9]{1,3})[.]([0-9]{1,3})[.]([0-9]{1,3})[.]([0-9]{1,3})$/', placeholder='xxx.xxx.xxx.xxx', required)
-      button.btn.btn-primary(type="submit", ng-disabled="ipAddressForm.$invalid") OK

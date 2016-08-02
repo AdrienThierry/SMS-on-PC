@@ -9,19 +9,4 @@
     tools:context="com.example.adrien.sms_on_pc.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ip_address"
-        android:id="@+id/ipAddressLabel" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/ipAddress"
-        android:layout_below="@+id/ipAddressLabel"
-        android:layout_centerHorizontal="true" />
-
 </RelativeLayout>

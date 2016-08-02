@@ -56,7 +56,9 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
+// --------------------------------------------------
+// Phone discovery
+// --------------------------------------------------
 var bonjour = require('bonjour')();
 // browse for all http services 
 bonjour.find({ type: 'http' }, function (service) {

@@ -18,7 +18,7 @@ public class Discovery extends Thread {
     public Discovery(MainActivity activity) throws IOException {
         this.activity = activity;
         this.serverSocket = new ServerSocket(0); // Use first available port
-        this.serviceName = "Android_SMS_on_PC";
+        this.serviceName = Constants.nsdServiceName;
     }
 
     public void run() {

@@ -9,11 +9,4 @@ SMS_on_PC.controller("mainController", function($scope) {
 	$scope.errorVisible = false;
 	$scope.errorMsg = "";
 
-	// --------------------------------------------------
-	// Submit phone IP
-	// --------------------------------------------------
-	$scope.submitIp = function() {
-		
-	};
-
 });
