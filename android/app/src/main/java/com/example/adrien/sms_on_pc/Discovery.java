@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
@@ -18,7 +20,11 @@ public class Discovery extends Thread {
     public Discovery(MainActivity activity) throws IOException {
         this.activity = activity;
         this.serverSocket = new ServerSocket(0); // Use first available port
-        this.serviceName = Constants.nsdServiceName;
+        try {
+            this.serviceName = ConfigParser.getConfig(activity).getString("nsd_service_name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void run() {
