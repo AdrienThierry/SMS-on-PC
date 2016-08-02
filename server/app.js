@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+var config = require('./ConfigParser.js');
+
 var app = express();
 
 // view engine setup
@@ -59,10 +61,13 @@ app.use(function(err, req, res, next) {
 // --------------------------------------------------
 // Phone discovery
 // --------------------------------------------------
+console.log(config);
 var bonjour = require('bonjour')();
 // browse for all http services 
 bonjour.find({ type: 'http' }, function (service) {
-  console.log('Found an HTTP server : ', service)
+	if (service.name.indexOf(config.nsd_service_name) != -1) // Service name contains expected name {
+		console.log(service);
+	}
 });
 
 module.exports = app;
