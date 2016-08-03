@@ -8,9 +8,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var config = require('./ConfigParser.js');
-
 var app = express();
+app.io = require('socket.io')();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -58,16 +57,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
-// --------------------------------------------------
+// Socket.io connection handling
+require("./connection_handling.js")(app.io);
+
 // Phone discovery
-// --------------------------------------------------
-console.log(config);
-var bonjour = require('bonjour')();
-// browse for all http services 
-bonjour.find({ type: 'http' }, function (service) {
-	if (service.name.indexOf(config.nsd_service_name) != -1) // Service name contains expected name {
-		console.log(service);
-	}
-});
+require("./discovery.js")(app.io);
 
 module.exports = app;

@@ -1,3 +1,6 @@
 {
-	"nsd_service_name": "SMS_on_PC"
+	"nsd_service_name": "SMS_on_PC",
+	"server_to_browser": {
+		"phone_discovered": "phone_discovered"
+	}
 }
