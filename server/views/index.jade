@@ -7,3 +7,9 @@ block content
   div.alert.alert-danger(role="alert", ng-show="errorVisible")
     span.glyphicon.glyphicon-exclamation-sign &nbsp;
     | {{errorMsg}}
+
+  // --------------------------------------------------
+  // Discovery screen
+  // --------------------------------------------------
+  div(ng-controller="discoveryController as discovery")
+    {{discovery.yolo}}

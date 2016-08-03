@@ -1,8 +1,20 @@
-var socket = io();
+var app = angular.module('SMS_on_PC', []);
 
-var SMS_on_PC = angular.module('SMS_on_PC', []);
+app.factory('socketIO', function() {
+	var socketIO = {};	
+	var socket;
 
-SMS_on_PC.controller("mainController", function($scope) {
+	socketIO.getSocket = function() {
+		if (socket == undefined) {
+			socket = io();
+		}
+		return socket;
+	}
+
+    return socketIO;
+});
+
+angular.module('SMS_on_PC').controller("mainController", function($scope, socketIO) {
 
 	// --------------------------------------------------
 	// INIT
@@ -10,5 +22,7 @@ SMS_on_PC.controller("mainController", function($scope) {
 	// Error message not visible
 	$scope.errorVisible = false;
 	$scope.errorMsg = "";
+
+	console.log(socketIO.getSocket());
 
 });
