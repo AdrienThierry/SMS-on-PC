@@ -3,6 +3,7 @@ package com.example.adrien.sms_on_pc;
 import android.content.Context;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
+import android.os.Build;
 
 import org.json.JSONException;
 
@@ -35,7 +36,7 @@ public class Discovery extends Thread {
     private void registerService(int port) {
         NsdServiceInfo serviceInfo  = new NsdServiceInfo();
 
-        serviceInfo.setServiceName(this.serviceName);
+        serviceInfo.setServiceName(this.serviceName + "/" + getDeviceName());
         serviceInfo.setServiceType("_http._tcp.");
         serviceInfo.setPort(port);
 
@@ -71,6 +72,29 @@ public class Discovery extends Thread {
                 // Unregistration failed.  Put debugging code here to determine why.
             }
         };
+    }
+
+    private String getDeviceName() {
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        if (model.startsWith(manufacturer)) {
+            return capitalize(model);
+        } else {
+            return capitalize(manufacturer) + " " + model;
+        }
+    }
+
+
+    private String capitalize(String s) {
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        char first = s.charAt(0);
+        if (Character.isUpperCase(first)) {
+            return s;
+        } else {
+            return Character.toUpperCase(first) + s.substring(1);
+        }
     }
 
 }
