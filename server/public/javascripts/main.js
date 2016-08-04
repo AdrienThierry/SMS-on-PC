@@ -1,4 +1,4 @@
-var app = angular.module('SMS_on_PC', []);
+var app = angular.module('SMS_on_PC', ['LocalStorageModule']);
 
 // --------------------------------------------------
 // Expose socket.io socket
@@ -55,9 +55,5 @@ angular.module('SMS_on_PC').controller("mainController", function($scope, config
 	// Error message not visible
 	$scope.errorVisible = false;
 	$scope.errorMsg = "";
-
-	configParser.getConf().then(function(data) {
-		console.log(data);
-	});
 
 });
