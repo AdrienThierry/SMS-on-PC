@@ -1,5 +1,6 @@
 package com.example.adrien.sms_on_pc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // If discovery service is not running, start it
+        if (!Utility.isMyServiceRunning(this, DiscoveryService.class)) {
+            Intent startServiceIntent = new Intent(this, DiscoveryService.class);
+            this.startService(startServiceIntent);
+        }
     }
 
     @Override
