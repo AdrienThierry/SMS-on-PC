@@ -15,6 +15,7 @@ public class Discovery extends Thread {
     private MainActivity activity;
     private ServerSocket serverSocket;
     private String serviceName;
+    private NsdServiceInfo nsdServiceInfo;
     private NsdManager nsdManager;
     private NsdManager.RegistrationListener registrationListener;
 
@@ -30,19 +31,26 @@ public class Discovery extends Thread {
 
     public void run() {
         initializeRegistrationListener();
-        registerService(this.serverSocket.getLocalPort());
+        initializeService(this.serverSocket.getLocalPort());
     }
 
-    private void registerService(int port) {
-        NsdServiceInfo serviceInfo  = new NsdServiceInfo();
-
-        serviceInfo.setServiceName(this.serviceName + "/" + getDeviceName());
-        serviceInfo.setServiceType("_http._tcp.");
-        serviceInfo.setPort(port);
-
+    public void registerService() {
         nsdManager = (NsdManager)activity.getSystemService(Context.NSD_SERVICE);
+        nsdManager.registerService(nsdServiceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);
+    }
 
-        nsdManager.registerService(serviceInfo, NsdManager.PROTOCOL_DNS_SD, registrationListener);
+    public void unregisterService() {
+        if (nsdManager != null && registrationListener != null) {
+            nsdManager.unregisterService(registrationListener);
+        }
+    }
+
+    private void initializeService(int port) {
+        nsdServiceInfo  = new NsdServiceInfo();
+
+        nsdServiceInfo.setServiceName(this.serviceName + "/" + getDeviceName());
+        nsdServiceInfo.setServiceType("_http._tcp.");
+        nsdServiceInfo.setPort(port);
     }
 
     private void initializeRegistrationListener() {

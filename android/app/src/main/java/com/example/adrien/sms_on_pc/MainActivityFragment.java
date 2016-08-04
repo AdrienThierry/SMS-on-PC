@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public class MainActivityFragment extends Fragment {
 
+    Thread discoveryThread;
+
     public MainActivityFragment() {
     }
 
@@ -20,12 +22,24 @@ public class MainActivityFragment extends Fragment {
 
         // Broadcast service using mDNS for phone discovery by server
         try {
-            Thread t = new Discovery((MainActivity)getActivity());
-            t.start();
+            discoveryThread = new Discovery((MainActivity)getActivity());
+            discoveryThread.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((Discovery)discoveryThread).registerService();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((Discovery)discoveryThread).unregisterService();
     }
 }
