@@ -6,7 +6,6 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "angular-local-storage": "^0.2.7",
     "body-parser": "~1.15.1",
     "bonjour": "^3.5.0",
     "cookie-parser": "~1.4.3",

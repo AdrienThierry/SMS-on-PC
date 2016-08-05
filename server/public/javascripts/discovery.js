@@ -1,4 +1,9 @@
-angular.module('SMS_on_PC').controller("discoveryController", function(localStorageService, constants, configParser, socketIO) {
+/**
+ * Angular controller that handle the socket.io connection and
+ * the display of the available phones list
+ */
+
+angular.module('SMS_on_PC').controller("discoveryController", function(constants, configParser, socketIO) {
 	configParser.getConf().then(function(data) {
 		var config = data;
 
@@ -7,19 +12,16 @@ angular.module('SMS_on_PC').controller("discoveryController", function(localStor
 		// On ask device ID
 		io.on(config.ask_device_id, function(data, callback) {
 			// Check if device ID exists in localStorage
-			if (localStorageService.get(constants.device_id_var_name) == null) {
-				console.log("Yolo");
-				console.log(config.ask_new_device_id);
+			if (localStorage.getItem(constants.device_id_var_name) == null) {
 				// Ask server for device ID
 				io.emit(config.ask_new_device_id, {}, function(response) {
-					localStorageService.set(constants.device_id_var_name, response);
-					callback(localStorageService.get(constants.device_id_var_name));
+					localStorage.setItem(constants.device_id_var_name, response);
+					callback(localStorage.getItem(constants.device_id_var_name));
 				});
 			}
 			else {
-				callback(localStorageService.get(constants.device_id_var_name));
+				callback(localStorage.getItem(constants.device_id_var_name));
 			}
-			
 		});
 	});	
 });

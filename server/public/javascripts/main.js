@@ -1,4 +1,8 @@
-var app = angular.module('SMS_on_PC', ['LocalStorageModule']);
+/**
+ * Main angular file
+ */
+
+var app = angular.module('SMS_on_PC', []);
 
 // --------------------------------------------------
 // Expose socket.io socket
@@ -28,6 +32,7 @@ app.factory('configParser', function(constants, $q, $http) {
 		var defer = $q.defer()
 
 		if (conf == undefined) {
+			// Get conf from server with a GET request
 			$http.get(constants.shared_conf_name)
 			.success(function(data) {
 				defer.resolve(data);

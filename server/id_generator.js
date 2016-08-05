@@ -1,10 +1,14 @@
+/**
+ * Unique device ID generator
+ */
+
 var fs = require('fs');
 var constants = require("./constants.js");
 
 // Check if last_id file exists
 function get_new_id() {
 	try {
-		fs.accessSync(constants.last_id_file_name, fs.R_OK | fs.W_OK)
+		fs.accessSync(constants.last_id_file_name, fs.R_OK | fs.W_OK);
 		//code to action if file exists
 		var buf = fs.readFileSync(constants.last_id_file_name);
 		var last_id = parseInt(buf);

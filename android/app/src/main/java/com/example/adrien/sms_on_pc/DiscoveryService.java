@@ -1,3 +1,9 @@
+/**
+ * Discovery service
+ * Starts on boot
+ * Broadcasts phone ip and other info on the network so that the server can fetch it
+ */
+
 package com.example.adrien.sms_on_pc;
 
 import android.app.Service;

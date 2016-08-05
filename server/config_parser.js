@@ -1,3 +1,7 @@
+/**
+ * Parse shared config file and exposes its content
+ */
+
 var fs = require('fs');
 var constants = require('./constants.js');
 

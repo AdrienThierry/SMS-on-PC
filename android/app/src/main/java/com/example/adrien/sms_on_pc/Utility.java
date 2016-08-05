@@ -1,3 +1,7 @@
+/**
+ * Utility functions used across the app
+ */
+
 package com.example.adrien.sms_on_pc;
 
 import android.app.ActivityManager;
@@ -5,6 +9,10 @@ import android.content.Context;
 import android.os.Build;
 
 public class Utility {
+
+    // --------------------------------------------------
+    // Check if a service is running
+    // --------------------------------------------------
     public static boolean isMyServiceRunning(Context context, Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -15,6 +23,9 @@ public class Utility {
         return false;
     }
 
+    // --------------------------------------------------
+    // Get device name in format : "VENDOR model"
+    // --------------------------------------------------
     public static String getDeviceName() {
         String manufacturer = Build.MANUFACTURER;
         String model = Build.MODEL;
@@ -25,7 +36,9 @@ public class Utility {
         }
     }
 
-
+    // --------------------------------------------------
+    // Capitalize a string
+    // --------------------------------------------------
     public static String capitalize(String s) {
         if (s == null || s.length() == 0) {
             return "";

@@ -1,3 +1,7 @@
+/**
+ * Phone discovery management using bonjour protocol
+ */
+
 var config = require('./config_parser.js');
 var bonjour = require('bonjour')();
 
