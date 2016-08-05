@@ -58,7 +58,7 @@ app.use(function(err, req, res, next) {
 });
 
 // Socket.io connection handling
-require("./connection_handling.js")(app.io);
+require("./connection_handling.js").start_handler(app.io);
 
 // Phone discovery
 require("./discovery.js")(app.io);

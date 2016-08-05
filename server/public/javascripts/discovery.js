@@ -15,8 +15,9 @@ angular.module('SMS_on_PC').controller("discoveryController", function(constants
 			if (localStorage.getItem(constants.device_id_var_name) == null) {
 				// Ask server for device ID
 				io.emit(config.ask_new_device_id, {}, function(response) {
-					localStorage.setItem(constants.device_id_var_name, response);
-					callback(localStorage.getItem(constants.device_id_var_name));
+					// Put a '1' before deviceID to indicate that the client is a browser
+					localStorage.setItem(constants.device_id_var_name, 10 + parseInt(response));
+					callback(parseInt(localStorage.getItem(constants.device_id_var_name)));
 				});
 			}
 			else {
