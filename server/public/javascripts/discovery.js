@@ -24,5 +24,9 @@ angular.module('SMS_on_PC').controller("discoveryController", function(constants
 				callback(localStorage.getItem(constants.device_id_var_name));
 			}
 		});
+
+		io.on('yolo', function(data) {
+			alert(data);
+		});
 	});	
 });

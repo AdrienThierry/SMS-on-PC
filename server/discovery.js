@@ -4,6 +4,7 @@
 
 var config = require('./config_parser.js');
 var bonjour = require('bonjour')();
+var sockets = require('./connection_handling.js').sockets;
 
 function discovery(io) {
 
@@ -12,6 +13,8 @@ function discovery(io) {
 		if (service.name.indexOf(config.nsd_service_name) != -1) { // Service name contains expected name
 			console.log(service);
 			
+			// Send new service event to all browsers
+			io.sockets.in(config.device_type.browser).emit('yolo', 'yolo');
 		}
 	});
 

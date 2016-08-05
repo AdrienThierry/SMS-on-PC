@@ -6,40 +6,46 @@ var config = require('./config_parser.js');
 var id_generator = require('./id_generator.js');
 
 var sockets = {};
-sockets.browsers = [];
-sockets.androids = [];
 
 function start_handler(io) {
 
+	// --------------------------------------------------
 	// On connection
+	// --------------------------------------------------
 	io.on('connection', function(socket) {
-		// Ask device id
+		// -------------------------
+		// Ask device ID
+		// -------------------------
 		socket.emit(config.ask_device_id, {}, function(response) {
+			// Add socket to sockets array
+			sockets[response.toString()] = socket;
+			
+			// Check device type and join corresponding room		
 			var device_type = response.toString()[0];
-
-			// Check device type and place socket in corresponding array
 			if (device_type == config.device_type.browser) {
-				sockets.browsers.push(socket);
-				console.log(sockets.browsers.length);
+				socket.join(config.device_type.browser); // Join browser room
 			}
 			else if (device_type == config.device_type.android) {
-				sockets.androids.push(socket);
+				socket.join(config.device_type.android); // Join android room
 			}
 		});
 
+		// -------------------------
 		// On ask new device id
+		// -------------------------
 		socket.on(config.ask_new_device_id, function(data, callback) {
 			callback(id_generator.get_new_id());
 		});
 
-		// On disconnect, remove socket from array
+		// -------------------------
+		// On disconnect, remove socket
+		// from array
+		// -------------------------
 		socket.on('disconnect', function() {
 			Object.keys(sockets).forEach(function(key) {
-				for (var i = 0 ; i < sockets[key].length ; i++) {
-					if (sockets[key][i].id == socket.id) { // Socket found
-						sockets[key].splice(i, 1); // Remove element
-					}
-				}
+				if (sockets[key].id == socket.id) { // Socket found
+					delete sockets[key];
+				}	
 			});
 		});
 	});
