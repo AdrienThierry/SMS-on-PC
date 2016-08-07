@@ -4,6 +4,7 @@
 
 var config = require('./config_parser.js');
 var id_generator = require('./id_generator.js');
+var discovered_phones = require('./discovery.js').discovered_phones;
 
 var sockets = {};
 
@@ -28,6 +29,10 @@ function start_handler(io) {
 			else if (device_type == config.device_type.android) {
 				socket.join(config.device_type.android); // Join android room
 			}
+
+			// Send list of discovered phones to new browser
+			socket.emit(config.discovered_phones, discovered_phones);
+			
 		});
 
 		// -------------------------

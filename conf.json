@@ -3,6 +3,7 @@
 
 	"ask_device_id": "ask_device_id",
 	"ask_new_device_id": "ask_new_device_id",
+	"discovered_phones": "discovered_phones",
 
 	"device_type": {
 		"browser": "1",

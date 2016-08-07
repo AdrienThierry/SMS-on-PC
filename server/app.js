@@ -61,6 +61,6 @@ app.use(function(err, req, res, next) {
 require("./connection_handling.js").start_handler(app.io);
 
 // Phone discovery
-require("./discovery.js")(app.io);
+require("./discovery.js").start_discovery(app.io);
 
 module.exports = app;

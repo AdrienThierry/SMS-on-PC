@@ -5,21 +5,32 @@
 var app = angular.module('SMS_on_PC', []);
 
 // --------------------------------------------------
-// Expose socket.io socket
+// Expose socket.io functions
 // --------------------------------------------------
-app.factory('socketIO', function() {
-	var socketIO = {};	
-	var socket;
-
-	socketIO.getSocket = function() {
-		if (socket == undefined) {
-			socket = io();
+app.factory('socket', function ($rootScope) {
+	var socket = io();
+	return {
+		on: function (eventName, callback) {
+			socket.on(eventName, function () {  
+				var args = arguments;
+				$rootScope.$apply(function () {
+					callback.apply(socket, args);
+				});
+			});
+    	},
+		emit: function (eventName, data, callback) {
+			socket.emit(eventName, data, function () {
+				var args = arguments;
+				$rootScope.$apply(function () {
+					if (callback) {
+						callback.apply(socket, args);
+					}
+				});
+			})
 		}
-		return socket;
-	}
-
-    return socketIO;
+	};
 });
+
 
 // --------------------------------------------------
 // Expose conf
@@ -55,7 +66,7 @@ app.factory('configParser', function(constants, $q, $http) {
 // --------------------------------------------------
 // Main controller
 // --------------------------------------------------
-angular.module('SMS_on_PC').controller("mainController", function($scope, configParser, socketIO) {
+angular.module('SMS_on_PC').controller("mainController", function($scope, configParser) {
 
 	// Error message not visible
 	$scope.errorVisible = false;

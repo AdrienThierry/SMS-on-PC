@@ -12,3 +12,8 @@ block content
   // Discovery screen
   // --------------------------------------------------
   div(ng-controller="discoveryController as discovery")
+    div.list-group
+      h1 {{discovery.yolo}}
+      div.row(ng-repeat="phone in discovery.discovered_phones")
+        p.col-md-5 {{phone.name}}
+        a.col-md-1.btn.btn-default Yolo
