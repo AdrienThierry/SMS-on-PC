@@ -15,7 +15,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         // If discovery service is not running, start it
         if (!Utility.isMyServiceRunning(this, DiscoveryService.class)) {
             Intent startServiceIntent = new Intent(this, DiscoveryService.class);
