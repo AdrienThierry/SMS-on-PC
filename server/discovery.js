@@ -20,7 +20,8 @@ function start_discovery(io) {
 
 	browser.on('up', function(service) {
 		if (service.name.indexOf(config.nsd_service_name) != -1) { // Service name contains expected name
-			discovered_phones.push({name: service.name, referer: service.referer});
+			var phone_name = service.name.substring(service.name.indexOf("/") + 1);
+			discovered_phones.push({name: phone_name, referer: service.referer});
 			console.log(discovered_phones);
 		}
 	});

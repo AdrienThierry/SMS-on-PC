@@ -2,7 +2,7 @@
  * Main angular file
  */
 
-var app = angular.module('SMS_on_PC', []);
+var app = angular.module('SMS_on_PC', ['pascalprecht.translate', 'ngSanitize']);
 
 // --------------------------------------------------
 // Expose socket.io functions

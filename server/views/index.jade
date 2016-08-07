@@ -13,7 +13,7 @@ block content
   // --------------------------------------------------
   div(ng-controller="discoveryController as discovery")
     div.list-group
-      h1 {{discovery.yolo}}
+      h1 {{'FC_choose_phone' | translate}}
       div.row(ng-repeat="phone in discovery.discovered_phones")
         p.col-md-5 {{phone.name}}
-        a.col-md-1.btn.btn-default Yolo
+        a.col-md-1.btn.btn-default {{'FC_choose' | translate}}

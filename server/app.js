@@ -23,6 +23,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/angular-translate', express.static(__dirname + '/node_modules/angular-translate/dist/'));
+
 app.use('/', routes);
 app.use('/users', users);
 

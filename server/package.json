@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "angular-translate": "^2.11.1",
     "body-parser": "~1.15.1",
     "bonjour": "^3.5.0",
     "cookie-parser": "~1.4.3",
