@@ -15,14 +15,14 @@ function start_handler(io) {
 	// --------------------------------------------------
 	io.on('connection', function(socket) {
 		// -------------------------
-		// Ask device ID
+		// On device ID sent
 		// -------------------------
-		socket.emit(config.ask_device_id, {}, function(response) {
+		socket.on(config.device_id, function(data) {
 			// Add socket to sockets array
-			sockets[response.toString()] = socket;
+			sockets[data.toString()] = socket;
 			
 			// Check device type and join corresponding room		
-			var device_type = response.toString()[0];
+			var device_type = data.toString()[0];
 			if (device_type == config.device_type.browser) {
 				socket.join(config.device_type.browser); // Join browser room
 			}
