@@ -23,7 +23,7 @@ function start_discovery(io) {
 			console.log(discovered_phones);
 
 			// Send list of discovered phones to browsers
-			io.sockets.in(config.device_type.browser).emit(config.discovered_phones, discovered_phones);
+			send_phone_list(io);
 		}
 	});
 
@@ -38,9 +38,13 @@ function start_discovery(io) {
 			}
 
 			// Send list of discovered phones to browsers
-			io.sockets.in(config.device_type.browser).emit(config.discovered_phones, discovered_phones);
+			send_phone_list(io);
 		}
 	});
+}
+
+function send_phone_list(io) {
+	io.sockets.in(config.device_type.browser).emit(config.discovered_phones, discovered_phones);
 }
 
 module.exports.start_discovery = start_discovery;

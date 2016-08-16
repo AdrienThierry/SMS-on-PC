@@ -5,11 +5,14 @@
 
 var config = require('./config_parser.js');
 var discovery = require('./discovery.js');
+var utility = require('./utility.js');
 var phones = discovery.discovered_phones;
 
 function apply_listeners(socket) {
 
 	socket.on(config.select_phone, function(data) {
+
+		console.log(utility.get_ip());
 
 		// --------------------------------------------------
 		// Send server IP to phone via classic socket
