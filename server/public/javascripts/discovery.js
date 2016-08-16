@@ -34,5 +34,12 @@ angular.module('SMS_on_PC').controller("discoveryController", function(constants
 			c.discovered_phones = data;
 		});
 
+		// --------------------------------------------------
+		// On phone selected
+		// --------------------------------------------------
+		c.select_phone = function(index) {
+			socket.emit(config.select_phone, index);
+		};
+
 	});	
 });

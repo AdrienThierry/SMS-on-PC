@@ -12,11 +12,16 @@ import android.content.Intent;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.os.IBinder;
+import android.util.Log;
 
 import org.json.JSONException;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class DiscoveryService extends Service {
     private Thread thread;
@@ -45,20 +50,39 @@ public class DiscoveryService extends Service {
                 // Start ServerSocket
                 try {
                     serverSocket = new ServerSocket(0); // Use first available port
+
+                    // Set service name
+                    try {
+                        serviceName = ConfigParser.getConfig(getApplicationContext()).getString("nsd_service_name");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    initializeRegistrationListener();
+                    Log.e("Yolo", "Yolo port " + serverSocket.getLocalPort());
+                    initializeService(serverSocket.getLocalPort());
+                    registerService();
+
+                    while(true) {
+                        try {
+                            Log.e("Yolo", "Waiting for clients on port " + serverSocket.getLocalPort());
+                            Socket server = serverSocket.accept();
+                            DataInputStream in = new DataInputStream(server.getInputStream());
+                            final BufferedReader inBuf = new BufferedReader(new InputStreamReader(in));
+
+                            final String text = inBuf.readLine();
+
+                            Log.e("Yolo", text);
+
+                            server.close();
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                // Set service name
-                try {
-                    serviceName = ConfigParser.getConfig(getApplicationContext()).getString("nsd_service_name");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                initializeRegistrationListener();
-                initializeService(serverSocket.getLocalPort());
-                registerService();
             }
         });
 

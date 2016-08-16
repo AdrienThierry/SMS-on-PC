@@ -12,13 +12,13 @@ function start_discovery(io) {
 
 	// browse for all http services 
 	var browser = bonjour.find({ type: 'http' }, function (service) {
-
+		
 	});
 
 	browser.on('up', function(service) {
 		if (service.name.indexOf(config.nsd_service_name) != -1) { // Service name contains expected name
 			var phone_name = service.name.substring(service.name.indexOf("/") + 1);
-			discovered_phones.push({name: phone_name, referer: service.referer});
+			discovered_phones.push({name: phone_name, info: {address: service.referer.address, port: service.port}});
 			console.log("Services up");
 			console.log(discovered_phones);
 

@@ -4,6 +4,7 @@
 	"device_id": "device_id",
 	"ask_new_device_id": "ask_new_device_id",
 	"discovered_phones": "discovered_phones",
+	"select_phone": "select_phone",
 
 	"device_type": {
 		"browser": "1",

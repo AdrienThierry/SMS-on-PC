@@ -4,7 +4,9 @@
 
 var config = require('./config_parser.js');
 var id_generator = require('./id_generator.js');
-var discovered_phones = require('./discovery.js').discovered_phones;
+var discovery = require('./discovery.js');
+var discovered_phones = discovery.discovered_phones;
+var phone_selection = require('./phone_selection.js');
 
 var sockets = {};
 
@@ -25,13 +27,12 @@ function start_handler(io) {
 			var device_type = data.toString()[0];
 			if (device_type == config.device_type.browser) {
 				socket.join(config.device_type.browser); // Join browser room
+				// Send list of discovered phones to new browser
+				socket.emit(config.discovered_phones, discovered_phones);
 			}
 			else if (device_type == config.device_type.android) {
 				socket.join(config.device_type.android); // Join android room
 			}
-
-			// Send list of discovered phones to new browser
-			socket.emit(config.discovered_phones, discovered_phones);
 			
 		});
 
@@ -53,6 +54,13 @@ function start_handler(io) {
 				}	
 			});
 		});
+
+		// -------------------------
+		// Apply listeners on new
+		// socket
+		// -------------------------
+		phone_selection.apply_listeners(socket);
+	
 	});
 
 }
