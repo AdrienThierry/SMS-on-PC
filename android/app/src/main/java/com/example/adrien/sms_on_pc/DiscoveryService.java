@@ -24,7 +24,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class DiscoveryService extends Service {
-    private Thread thread;
     private ServerSocket serverSocket;
     private String serviceName;
     private NsdServiceInfo nsdServiceInfo;
@@ -43,50 +42,24 @@ public class DiscoveryService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        thread = new Thread(new Runnable(){
-            @Override
-            public void run() {
+        try {
+            serverSocket = new ServerSocket(0); // Use first available port
+            ConnectionHandling connectionHandling = new ConnectionHandling(serverSocket);
+            connectionHandling.start(); // Start java socket thread to handle connection with server
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-                // Start ServerSocket
-                try {
-                    serverSocket = new ServerSocket(0); // Use first available port
+        // Set service name
+        try {
+            serviceName = ConfigParser.getConfig(getApplicationContext()).getString("nsd_service_name");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-                    // Set service name
-                    try {
-                        serviceName = ConfigParser.getConfig(getApplicationContext()).getString("nsd_service_name");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    initializeRegistrationListener();
-                    Log.e("Yolo", "Yolo port " + serverSocket.getLocalPort());
-                    initializeService(serverSocket.getLocalPort());
-                    registerService();
-
-                    while(true) {
-                        try {
-                            Log.e("Yolo", "Waiting for clients on port " + serverSocket.getLocalPort());
-                            Socket server = serverSocket.accept();
-                            DataInputStream in = new DataInputStream(server.getInputStream());
-                            final BufferedReader inBuf = new BufferedReader(new InputStreamReader(in));
-
-                            final String text = inBuf.readLine();
-
-                            Log.e("Yolo", text);
-
-                            server.close();
-                        } catch (IOException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start();
+        initializeRegistrationListener();
+        initializeService(serverSocket.getLocalPort());
+        registerService();
 
         // Let it continue running until it is stopped.
         return START_STICKY;
