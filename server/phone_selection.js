@@ -12,8 +12,6 @@ function apply_listeners(socket) {
 
 	socket.on(config.select_phone, function(data) {
 
-		console.log(utility.get_ip());
-
 		// --------------------------------------------------
 		// Send server IP to phone via classic socket
 		// --------------------------------------------------
@@ -28,7 +26,7 @@ function apply_listeners(socket) {
 
 		s.connect(parseInt(port), address);
 
-		s.write('Yolo les vieux', 'UTF-8');
+		s.write('http://' + utility.get_ip() + ':' + config.server_port, 'UTF-8');
 		s.end();
 
 	});

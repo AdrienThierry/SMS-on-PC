@@ -1,4 +1,6 @@
 {
+	"server_port": "3000",
+
 	"nsd_service_name": "SMS_on_PC",
 
 	"device_id": "device_id",

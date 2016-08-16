@@ -28,9 +28,7 @@ public class ConnectionHandling extends Thread {
             DataInputStream in = new DataInputStream(server.getInputStream());
             final BufferedReader inBuf = new BufferedReader(new InputStreamReader(in));
 
-            final String text = inBuf.readLine();
-
-            Log.e("Yolo", text);
+            final String serverInfo = inBuf.readLine();
 
             server.close();
         }
