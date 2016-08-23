@@ -5,6 +5,7 @@
 var config = require('./config_parser.js');
 var bonjour = require('bonjour')();
 var sockets = require('./connection_handling.js').sockets;
+var constants = require('./constants.js');
 
 var discovered_phones = [];
 
@@ -14,6 +15,11 @@ function start_discovery(io) {
 	var browser = bonjour.find({ type: 'http' }, function (service) {
 		
 	});
+
+	// Send query every "constants.queryPeriod" sec
+	setInterval(function() {
+		browser.update();
+	}, constants.bonjour_query_period);  
 
 	browser.on('up', function(service) {
 		if (service.name.indexOf(config.nsd_service_name) != -1) { // Service name contains expected name
