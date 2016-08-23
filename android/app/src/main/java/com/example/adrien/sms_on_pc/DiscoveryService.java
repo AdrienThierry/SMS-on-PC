@@ -12,16 +12,11 @@ import android.content.Intent;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.os.IBinder;
-import android.util.Log;
 
 import org.json.JSONException;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 public class DiscoveryService extends Service {
     private ServerSocket serverSocket;
@@ -44,8 +39,8 @@ public class DiscoveryService extends Service {
 
         try {
             serverSocket = new ServerSocket(0); // Use first available port
-            ConnectionHandling connectionHandling = new ConnectionHandling(serverSocket);
-            connectionHandling.start(); // Start java socket thread to handle connection with server
+            ServerInfoFetcher serverInfoFetcher = new ServerInfoFetcher(serverSocket, getApplicationContext());
+            serverInfoFetcher.start(); // Start java socket thread to handle connection with server
         } catch (IOException e) {
             e.printStackTrace();
         }

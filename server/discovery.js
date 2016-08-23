@@ -32,7 +32,7 @@ function start_discovery(io) {
 
 		// Delete phone in array
 		for (var i = 0 ; i < discovered_phones.length ; i++) {
-			if (discovered_phones[i].referer.address == service.referer.address && discovered_phones[i].referer.port == service.referer.port) {
+			if (discovered_phones[i].info.address == service.referer.address && discovered_phones[i].info.port == service.port) {
 				
 				discovered_phones.splice(i,1);
 			}
