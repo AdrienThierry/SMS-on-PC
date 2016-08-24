@@ -18,7 +18,6 @@ function apply_listeners(socket) {
 		var s = require('net').Socket();
 		var address = phones[parseInt(data)].info.address;
 		var port = phones[parseInt(data)].info.port;
-		console.log(port);
 
 		s.on('error', function(d){
 			console.log(d.toString());

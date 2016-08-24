@@ -11,7 +11,15 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+import java.net.URISyntaxException;
+
+import io.socket.client.IO;
+
+
 public class ConnectionHandlingService extends Service {
+
+    private io.socket.client.Socket socket;
+
     public ConnectionHandlingService() {
     }
 
@@ -31,7 +39,14 @@ public class ConnectionHandlingService extends Service {
 
         // Access granted by user -> establish socket.io connection
         if (bundle.getBoolean("grant") == true) {
-            Log.e("Yolo", "Yolo " + bundle.getString("server_info"));
+            // Connect to server
+            try {
+                socket = IO.socket(bundle.getString("server_info"));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+
+            socket.connect();
         }
 
         return START_REDELIVER_INTENT;

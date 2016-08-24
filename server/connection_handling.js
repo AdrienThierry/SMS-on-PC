@@ -16,6 +16,8 @@ function start_handler(io) {
 	// On connection
 	// --------------------------------------------------
 	io.on('connection', function(socket) {
+		console.log("Connection");
+
 		// -------------------------
 		// On device ID sent
 		// -------------------------
