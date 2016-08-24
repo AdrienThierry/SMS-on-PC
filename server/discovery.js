@@ -16,6 +16,11 @@ function start_discovery(io) {
 		
 	});
 
+	// Send mdns query every mdns_query_period ms
+	setInterval(function() {
+		browser.update();
+	}, constants.mdns_query_period);  
+
 	browser.on('up', function(service) {
 		if (service.name.indexOf(config.nsd_service_name) != -1) { // Service name contains expected name
 			var phone_name = service.name.substring(service.name.indexOf("/") + 1);
