@@ -9,4 +9,19 @@
     tools:context="com.example.adrien.sms_on_pc.MainActivityFragment"
     tools:showIn="@layout/activity_main">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textDiscoveryServiceState"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/buttonToggleDiscoveryServiceState"
+        android:layout_below="@+id/textDiscoveryServiceState"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

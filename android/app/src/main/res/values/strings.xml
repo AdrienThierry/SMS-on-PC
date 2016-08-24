@@ -5,4 +5,8 @@
     <string name="FC_grant">Grant</string>
     <string name="FC_deny">Deny</string>
     <string name="FC_authorize">Authorize</string>
+    <string name="C_on">ON</string>
+    <string name="C_off">OFF</string>
+    <string name="FC_start_discovery">Start discovery</string>
+    <string name="FC_stop_discovery">Stop discovery</string>
 </resources>
