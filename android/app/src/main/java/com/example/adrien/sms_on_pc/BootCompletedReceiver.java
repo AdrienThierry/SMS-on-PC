@@ -15,8 +15,10 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // Start discovery service
-        Intent startServiceIntent = new Intent(context, DiscoveryService.class);
-        context.startService(startServiceIntent);
+        // Start discovery service if WiFI is connected
+        if (Utility.isWiFiConnected(context)) {
+            Intent startServiceIntent = new Intent(context, DiscoveryService.class);
+            context.startService(startServiceIntent);
+        }
     }
 }

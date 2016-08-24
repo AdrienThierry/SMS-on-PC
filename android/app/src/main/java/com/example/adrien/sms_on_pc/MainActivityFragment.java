@@ -1,7 +1,11 @@
 package com.example.adrien.sms_on_pc;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,6 +23,8 @@ public class MainActivityFragment extends Fragment {
 
     private Intent discoveryServiceIntent;
 
+    private BroadcastReceiver updateUIReceiver;
+
     public MainActivityFragment() {
     }
 
@@ -35,11 +41,27 @@ public class MainActivityFragment extends Fragment {
 
         updateView();
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.MAIN_ACTIVITY_FRAGMENT_UPDATE_UI_ACTION);
+        updateUIReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+               updateView();
+            }
+        };
+        getActivity().registerReceiver(updateUIReceiver,filter);
+
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().unregisterReceiver(updateUIReceiver);
+    }
+
     // Update button and text according to discovery service state
-    private void updateView() {
+    public void updateView() {
         // If service is running
         if (Utility.isMyServiceRunning(getContext(), DiscoveryService.class)) {
             textDiscoveryServiceState.setTextColor(Color.GREEN);

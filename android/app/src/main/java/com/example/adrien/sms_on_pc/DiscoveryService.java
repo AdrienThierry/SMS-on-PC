@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -94,22 +95,26 @@ public class DiscoveryService extends Service {
                 // resolve a conflict, so update the name you initially requested
                 // with the name Android actually used.
                 serviceName = NsdServiceInfo.getServiceName();
+                Toast.makeText(getBaseContext(), "Service registered", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onRegistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
                 // Registration failed!  Put debugging code here to determine why.
+                Toast.makeText(getBaseContext(), "Registration failed error " + errorCode, Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onServiceUnregistered(NsdServiceInfo arg0) {
                 // Service has been unregistered.  This only happens when you call
                 // NsdManager.unregisterService() and pass in this listener.
+                Toast.makeText(getBaseContext(), "Service unregistered", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onUnregistrationFailed(NsdServiceInfo serviceInfo, int errorCode) {
                 // Unregistration failed.  Put debugging code here to determine why.
+                Toast.makeText(getBaseContext(), "Unegistration failed error " + errorCode, Toast.LENGTH_LONG).show();
             }
         };
     }
