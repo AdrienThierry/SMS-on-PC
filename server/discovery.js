@@ -16,11 +16,6 @@ function start_discovery(io) {
 		
 	});
 
-	// Send query every "constants.queryPeriod" sec
-	setInterval(function() {
-		browser.update();
-	}, constants.bonjour_query_period);  
-
 	browser.on('up', function(service) {
 		if (service.name.indexOf(config.nsd_service_name) != -1) { // Service name contains expected name
 			var phone_name = service.name.substring(service.name.indexOf("/") + 1);
