@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 public class MainActivityFragment extends Fragment {
 
     private TextView textDiscoveryServiceState;
@@ -23,7 +20,7 @@ public class MainActivityFragment extends Fragment {
 
     private Intent discoveryServiceIntent;
 
-    private BroadcastReceiver updateUIReceiver;
+    private BroadcastReceiver updateUIReceiver; // Allow outside to force UI update
 
     public MainActivityFragment() {
     }

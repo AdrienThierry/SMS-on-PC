@@ -12,9 +12,7 @@ var discovered_phones = [];
 function start_discovery(io) {
 
 	// browse for all http services 
-	var browser = bonjour.find({ type: 'http' }, function (service) {
-		
-	});
+	var browser = bonjour.find({ type: 'http' });
 
 	// Send mdns query every mdns_query_period ms
 	setInterval(function() {
@@ -50,8 +48,12 @@ function start_discovery(io) {
 	});
 }
 
+// --------------------------------------------------
+// Send list of discovered phones to all 
+// connected browsers
+// --------------------------------------------------
 function send_phone_list(io) {
-	io.sockets.in(config.device_type.browser).emit(config.discovered_phones, discovered_phones);
+	io.sockets.in(config.device_type.browser).emit(config.EVENT_discovered_phones, discovered_phones);
 }
 
 module.exports.start_discovery = start_discovery;

@@ -3,10 +3,10 @@
 
 	"nsd_service_name": "SMS_on_PC",
 
-	"device_id": "device_id",
-	"ask_new_device_id": "ask_new_device_id",
-	"discovered_phones": "discovered_phones",
-	"select_phone": "select_phone",
+	"EVENT_device_id": "0",
+	"EVENT_ask_new_device_id": "1",
+	"EVENT_discovered_phones": "2",
+	"EVENT_select_phone": "3",
 
 	"device_type": {
 		"browser": "1",

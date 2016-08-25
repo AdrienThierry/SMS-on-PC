@@ -1,5 +1,5 @@
 /**
- * Discovery service
+ * Discovery service that uses mDNS
  * Starts on boot
  * Broadcasts phone ip and other info on the network so that the server can fetch it
  */
@@ -55,7 +55,7 @@ public class DiscoveryService extends Service {
 
         initializeRegistrationListener();
         initializeService(serverSocket.getLocalPort());
-        registerService();
+        registerService(); // Start discovery
 
         // Let it continue running until it is stopped.
         return START_STICKY;
@@ -64,7 +64,7 @@ public class DiscoveryService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unregisterService();
+        unregisterService(); // Stop discovery when service is killed
     }
 
     public void registerService() {

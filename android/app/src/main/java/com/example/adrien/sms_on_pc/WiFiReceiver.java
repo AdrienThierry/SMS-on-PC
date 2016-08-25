@@ -24,13 +24,13 @@ public class WiFiReceiver extends BroadcastReceiver {
             context.startService(discoveryServiceIntent);
             Toast.makeText(context, "Wifi State change : start service", Toast.LENGTH_LONG).show();
         }
-        // Stop discovery service if WiFi is disconnected
+        // Stop discovery service if WiFi is disconnected and service is started
         else if (!Utility.isWiFiConnected(context) && Utility.isMyServiceRunning(context, DiscoveryService.class)){
             context.stopService(discoveryServiceIntent);
             Toast.makeText(context, "Wifi State change : stop service", Toast.LENGTH_LONG).show();
         }
 
-        // Update UI
+        // Update MainActivityFragment with new status of discovery service
         Intent updateUI = new Intent();
         updateUI.setAction(Constants.MAIN_ACTIVITY_FRAGMENT_UPDATE_UI_ACTION);
         context.sendBroadcast(updateUI);

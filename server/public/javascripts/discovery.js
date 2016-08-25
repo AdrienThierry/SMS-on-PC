@@ -16,21 +16,21 @@ angular.module('SMS_on_PC').controller("discoveryController", function(constants
 		// Check if device ID exists in localStorage
 		if (localStorage.getItem(constants.device_id_var_name) == null) {
 			// Ask server for device ID
-			socket.emit(config.ask_new_device_id, {}, function(response) {
+			socket.emit(config.EVENT_ask_new_device_id, {}, function(response) {
 				// Put a '1' before deviceID to indicate that the client is a browser
 				localStorage.setItem(constants.device_id_var_name, Math.pow(10, Math.floor(parseInt(response)/10) + 1) + parseInt(response));
-				socket.emit(config.device_id, localStorage.getItem(constants.device_id_var_name));
+				socket.emit(config.EVENT_device_id, localStorage.getItem(constants.device_id_var_name));
 			});
 		}
 		else {
-			socket.emit(config.device_id, localStorage.getItem(constants.device_id_var_name));
+			socket.emit(config.EVENT_device_id, localStorage.getItem(constants.device_id_var_name));
 		}
 		
 
 		// --------------------------------------------------
 		// On phones discovered
 		// --------------------------------------------------
-		socket.on(config.discovered_phones, function(data) {
+		socket.on(config.EVENT_discovered_phones, function(data) {
 			c.discovered_phones = data;
 		});
 
@@ -38,7 +38,7 @@ angular.module('SMS_on_PC').controller("discoveryController", function(constants
 		// On phone selected
 		// --------------------------------------------------
 		c.select_phone = function(index) {
-			socket.emit(config.select_phone, index);
+			socket.emit(config.EVENT_select_phone, index);
 		};
 
 	});	

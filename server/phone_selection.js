@@ -10,7 +10,7 @@ var phones = discovery.discovered_phones;
 
 function apply_listeners(socket) {
 
-	socket.on(config.select_phone, function(data) {
+	socket.on(config.EVENT_select_phone, function(data) {
 
 		// --------------------------------------------------
 		// Send server IP to phone via classic socket

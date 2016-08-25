@@ -1,5 +1,5 @@
 /**
- * Handles connection with server
+ * Establishes socket.io connection with server
  */
 
 package com.example.adrien.sms_on_pc;
@@ -9,12 +9,10 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.util.Log;
 
 import java.net.URISyntaxException;
 
 import io.socket.client.IO;
-
 
 public class ConnectionHandlingService extends Service {
 
@@ -47,6 +45,7 @@ public class ConnectionHandlingService extends Service {
             }
 
             socket.connect();
+            
         }
 
         return START_REDELIVER_INTENT;
