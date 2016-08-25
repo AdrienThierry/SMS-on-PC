@@ -40,7 +40,7 @@ public class ConnectionHandlingService extends Service {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         manager.cancel(Constants.AUTHORIZE_NOTIFICATION_ID);
 
-        Bundle bundle = intent.getExtras();
+        final Bundle bundle = intent.getExtras();
 
         // Access granted by user -> establish socket.io connection
         if (bundle.getBoolean("grant") == true) {
@@ -66,19 +66,21 @@ public class ConnectionHandlingService extends Service {
             int deviceID = sharedPref.getInt(Constants.DEVICE_ID_KEY, -1);
 
             if (deviceID == -1) { // No device ID => ask device ID from server
-
                 try {
                     socket.emit(config.getString("EVENT_ask_new_device_id"), "", new Ack() {
                         @Override
                         public void call(Object... args) {
 
                             int response = Integer.parseInt(args[0].toString());
-                            int newID = response != 0 ? (int) (2 * Math.pow(10, Math.floor(Math.log10(response)) + 1) + response) : 20;
+                            int newID = (int) (2 * Math.pow(10, Math.floor(Math.log10(response)) + 1) + response);
                             editor.putInt(Constants.DEVICE_ID_KEY, newID);
                             editor.commit();
 
                             try {
-                                socket.emit(config.getString("EVENT_device_id"), sharedPref.getInt(Constants.DEVICE_ID_KEY, -1));
+                                JSONObject phoneResponse = new JSONObject();
+                                phoneResponse.put("device_id", String.valueOf(sharedPref.getInt(Constants.DEVICE_ID_KEY, -1)));
+                                phoneResponse.put("second_party_id", bundle.getString("browser_id"));
+                                socket.emit(config.getString("EVENT_device_id"), phoneResponse);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -90,13 +92,17 @@ public class ConnectionHandlingService extends Service {
 
             }
 
-            else { // Device ID exists on phone
+            else {
                 try {
-                    socket.emit(config.getString("EVENT_device_id"), deviceID);
+                    JSONObject phoneResponse = new JSONObject();
+                    phoneResponse.put("device_id", String.valueOf(sharedPref.getInt(Constants.DEVICE_ID_KEY, -1)));
+                    phoneResponse.put("second_party_id", bundle.getString("browser_id"));
+                    socket.emit(config.getString("EVENT_device_id"), phoneResponse);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+
         }
 
         return START_REDELIVER_INTENT;

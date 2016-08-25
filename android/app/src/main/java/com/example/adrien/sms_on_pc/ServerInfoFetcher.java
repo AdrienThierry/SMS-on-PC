@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -36,7 +37,9 @@ public class ServerInfoFetcher extends Thread {
                 Socket server = this.serverSocket.accept();
                 DataInputStream in = new DataInputStream(server.getInputStream());
                 final BufferedReader inBuf = new BufferedReader(new InputStreamReader(in));
-                final String serverInfo = inBuf.readLine();
+                final String data = inBuf.readLine();
+                final String browserID = data.split("-")[0];
+                final String serverInfo = data.split("-")[1];
                 final String ipAddress = serverInfo.split("\\://")[1].split("\\:")[0];
                 server.close();
 
@@ -57,6 +60,7 @@ public class ServerInfoFetcher extends Thread {
                 Intent grantIntent = new Intent(context, ConnectionHandlingService.class);
                 grantIntent.putExtra("grant", true);
                 grantIntent.putExtra("server_info", serverInfo);
+                grantIntent.putExtra("browser_id", browserID);
                 PendingIntent grantPendingIntent = PendingIntent.getService(context, 0, grantIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 Intent declineIntent = new Intent(context, ConnectionHandlingService.class);

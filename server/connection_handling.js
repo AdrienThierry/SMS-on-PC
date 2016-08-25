@@ -16,7 +16,7 @@ function start_handler(io) {
 	// On connection
 	// --------------------------------------------------
 	io.on('connection', function(socket) {
-		console.log("Connection");
+		console.log("SOCKET_IO Connection");
 
 		// -------------------------
 		// On device ID sent
@@ -24,11 +24,14 @@ function start_handler(io) {
 		socket.on(config.EVENT_device_id, function(data) {
 			console.log(data);
 
+			var device_id = data.device_id.toString();
+			var second_party_id = data.second_party_id;
+
 			// Add socket to sockets array
-			sockets[data.toString()] = socket;
+			sockets[device_id] = socket;
 			
 			// Check device type and join corresponding room		
-			var device_type = data.toString()[0];
+			var device_type = device_id[0];
 			if (device_type == config.device_type.browser) {
 				socket.join(config.device_type.browser); // Join browser room
 				// Send list of discovered phones to new browser
@@ -37,6 +40,9 @@ function start_handler(io) {
 			else if (device_type == config.device_type.android) {
 				socket.join(config.device_type.android); // Join android room
 			}
+
+			// TODO : à enlever
+			console.log(Object.keys(sockets).length);
 			
 		});
 
@@ -57,6 +63,9 @@ function start_handler(io) {
 					delete sockets[key];
 				}	
 			});
+
+			// TODO : à enlever
+			console.log(Object.keys(sockets).length);
 		});
 
 		// -------------------------
