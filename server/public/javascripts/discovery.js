@@ -17,8 +17,11 @@ angular.module('SMS_on_PC').controller("discoveryController", function(constants
 		if (localStorage.getItem(constants.device_id_var_name) == null) {
 			// Ask server for device ID
 			socket.emit(config.EVENT_ask_new_device_id, {}, function(response) {
+
 				// Put a '1' before deviceID to indicate that the client is a browser
-				localStorage.setItem(constants.device_id_var_name, Math.pow(10, Math.floor(parseInt(response)/10) + 1) + parseInt(response));
+				var newID = parseInt(response) != 0 ? Math.pow(10, Math.floor(Math.log10(parseInt(response))) + 1) + parseInt(response) : 10;
+
+				localStorage.setItem(constants.device_id_var_name, newID);
 				socket.emit(config.EVENT_device_id, localStorage.getItem(constants.device_id_var_name));
 			});
 		}

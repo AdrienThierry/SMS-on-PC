@@ -22,6 +22,8 @@ function start_handler(io) {
 		// On device ID sent
 		// -------------------------
 		socket.on(config.EVENT_device_id, function(data) {
+			console.log(data);
+
 			// Add socket to sockets array
 			sockets[data.toString()] = socket;
 			
