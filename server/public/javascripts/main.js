@@ -64,6 +64,36 @@ app.factory('configParser', function(constants, $q, $http) {
 });
 
 // --------------------------------------------------
+// Service to share properties between controllers
+// --------------------------------------------------
+app.service('sharedProperties', function () {
+	var show_discovery = true;
+	var show_SMS_screen = false;
+	var phone_name = "";
+
+	return {
+		get_show_discovery: function () {
+			return show_discovery;
+		},
+		set_show_discovery: function(value) {
+			show_discovery = value;
+		},
+		get_show_SMS_screen: function () {
+			return show_SMS_screen;
+		},
+		set_show_SMS_screen: function(value) {
+			show_SMS_screen = value;
+		},
+		get_phone_name: function() {
+			return phone_name;
+		},
+		set_phone_name: function(value) {
+			phone_name = value;
+		}
+	};
+});
+
+// --------------------------------------------------
 // Main controller
 // --------------------------------------------------
 angular.module('SMS_on_PC').controller("mainController", function($scope, configParser) {

@@ -3,10 +3,10 @@
  * the display of the available phones list
  */
 
-angular.module('SMS_on_PC').controller("discoveryController", function(constants, configParser, socket) {
+angular.module('SMS_on_PC').controller("discoveryController", function(constants, configParser, socket, sharedProperties) {
 	var c = this;	
 
-	c.show = true;
+	c.show = sharedProperties.get_show_discovery;
 
 	configParser.getConf().then(function(data) {
 
@@ -43,13 +43,15 @@ angular.module('SMS_on_PC').controller("discoveryController", function(constants
 		// --------------------------------------------------
 		c.select_phone = function(index) {
 			socket.emit(config.EVENT_select_phone, {browser_id: localStorage.getItem(constants.device_id_var_name), phone_index: index});
+			sharedProperties.set_phone_name(c.discovered_phones[index].name);
 		};
 
 		// --------------------------------------------------
 		// On selected phone connected
 		// --------------------------------------------------
 		socket.on(config.EVENT_phone_connected, function(data) {
-			c.show = false;
+			sharedProperties.set_show_discovery(false);
+			sharedProperties.set_show_SMS_screen(true);
 		});
 
 	});	

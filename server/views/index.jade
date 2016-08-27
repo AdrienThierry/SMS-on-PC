@@ -1,19 +1,31 @@
 extends layout
 
 block content
-  // --------------------------------------------------
-  // Alert block for errors
-  // --------------------------------------------------
-  div.alert.alert-danger(role="alert", ng-show="errorVisible")
-    span.glyphicon.glyphicon-exclamation-sign &nbsp;
-    | {{errorMsg}}
+
+  div.container
+    // --------------------------------------------------
+    // Alert block for errors
+    // --------------------------------------------------
+    div.alert.alert-danger(role="alert", ng-show="errorVisible")
+      span.glyphicon.glyphicon-exclamation-sign &nbsp;
+      | {{errorMsg}}
+
+    // --------------------------------------------------
+    // Discovery screen
+    // --------------------------------------------------
+    div(ng-controller="discoveryController as discovery", ng-show="discovery.show()")
+      div.list-group
+        h1 {{'FC_choose_phone' | translate}}
+        div.row(ng-repeat="phone in discovery.discovered_phones")
+          p.col-md-5 {{phone.name}}
+          a.col-md-1.btn.btn-default(ng-click="discovery.select_phone(discovery.discovered_phones.indexOf(phone))") {{'FC_choose' | translate}}
+
 
   // --------------------------------------------------
-  // Discovery screen
+  // Main screen
   // --------------------------------------------------
-  div(ng-controller="discoveryController as discovery", ng-show="discovery.show")
-    div.list-group
-      h1 {{'FC_choose_phone' | translate}}
-      div.row(ng-repeat="phone in discovery.discovered_phones")
-        p.col-md-5 {{phone.name}}
-        a.col-md-1.btn.btn-default(ng-click="discovery.select_phone(discovery.discovered_phones.indexOf(phone))") {{'FC_choose' | translate}}
+  div(ng-controller="SMSScreenController as sms", ng-show="sms.show()")
+    nav.navbar.navbar-default.navbar-fixed-top
+      div.container
+        div.navbar-header
+          a.navbar-brand {{sms.phone_name()}}
