@@ -53,6 +53,8 @@ public class ConnectionHandlingService extends Service {
 
             socket.connect();
 
+
+
             // Get shared config
             config = ConfigParser.getConfig(getBaseContext());
 

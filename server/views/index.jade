@@ -11,7 +11,7 @@ block content
   // --------------------------------------------------
   // Discovery screen
   // --------------------------------------------------
-  div(ng-controller="discoveryController as discovery")
+  div(ng-controller="discoveryController as discovery", ng-show="discovery.show")
     div.list-group
       h1 {{'FC_choose_phone' | translate}}
       div.row(ng-repeat="phone in discovery.discovered_phones")

@@ -7,6 +7,7 @@
 	"EVENT_ask_new_device_id": "1",
 	"EVENT_discovered_phones": "2",
 	"EVENT_select_phone": "3",
+	"EVENT_phone_connected": "4",
 
 	"device_type": {
 		"browser": "1",

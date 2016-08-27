@@ -48,6 +48,11 @@ function start_handler(io) {
 				associations.add_association(second_party_id, device_id);
 				associations.print_phones();
 				associations.print_browsers();
+
+				// Send event to browser on which phone has been selected to tell it it can go to the next screen
+				var browser_socket = find_socket_by_id(second_party_id);
+				browser_socket.emit(config.EVENT_phone_connected, {});
+				
 			}
 
 			console.log("BROWSERS : " + sockets.browsers.length);
@@ -106,6 +111,23 @@ function start_handler(io) {
 	
 	});
 
+}
+
+function find_socket_by_id(device_id) {
+	var id = device_id.toString();
+
+	var socket;
+
+	Object.keys(sockets).forEach(function(key) {
+		for (var i = 0 ; i < sockets[key].length ; i++) {
+			if (sockets[key][i].device_id == id) {
+				socket = sockets[key][i].socket;
+				return;
+			}
+		}
+	});
+
+	return socket;
 }
 
 module.exports.start_handler = start_handler;

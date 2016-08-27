@@ -6,6 +6,8 @@
 angular.module('SMS_on_PC').controller("discoveryController", function(constants, configParser, socket) {
 	var c = this;	
 
+	c.show = true;
+
 	configParser.getConf().then(function(data) {
 
 		var config = data;
@@ -37,11 +39,18 @@ angular.module('SMS_on_PC').controller("discoveryController", function(constants
 		});
 
 		// --------------------------------------------------
-		// On phone selected
+		// Send selected phone to server
 		// --------------------------------------------------
 		c.select_phone = function(index) {
 			socket.emit(config.EVENT_select_phone, {browser_id: localStorage.getItem(constants.device_id_var_name), phone_index: index});
 		};
+
+		// --------------------------------------------------
+		// On selected phone connected
+		// --------------------------------------------------
+		socket.on(config.EVENT_phone_connected, function(data) {
+			c.show = false;
+		});
 
 	});	
 });
