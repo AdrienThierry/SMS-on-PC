@@ -11,11 +11,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import io.socket.client.Ack;
 import io.socket.client.IO;
@@ -106,6 +109,11 @@ public class ConnectionHandlingService extends Service {
             }
 
         }
+
+        // Send contact list to server
+        Contacts.initialize(getBaseContext());
+        EventEmitters.initialize(getBaseContext());
+        EventEmitters.sendContactList(socket, Contacts.getContacts());
 
         return START_REDELIVER_INTENT;
     }

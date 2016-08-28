@@ -11,6 +11,19 @@ angular.module('SMS_on_PC').controller("SMSScreenController", function(constants
 
 	configParser.getConf().then(function(data) {
 
+		var config = data;
+
+		socket.on(config.EVENT_send_contact_list, function(data) {
+			c.contacts = [];
+
+			Object.keys(data).forEach(function(key) {
+				c.contacts.push(data[key]);
+				c.contacts.sort();
+			});
+
+			console.log(c.contacts);
+		});
+
 	});
 
 });

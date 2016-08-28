@@ -24,8 +24,13 @@ block content
   // --------------------------------------------------
   // Main screen
   // --------------------------------------------------
-  div(ng-controller="SMSScreenController as sms", ng-show="sms.show()")
+  div#sms_screen(ng-controller="SMSScreenController as sms", ng-show="sms.show()")
     nav.navbar.navbar-default.navbar-fixed-top
       div.container
         div.navbar-header
           a.navbar-brand {{sms.phone_name()}}
+
+    div.container
+      div.row
+        div.list-group.col-md-2
+          a.list-group-item(href="#", ng-repeat="name in sms.contacts") {{name}}

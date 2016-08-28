@@ -7,11 +7,12 @@ var id_generator = require('./id_generator.js');
 var discovery = require('./discovery.js');
 var discovered_phones = discovery.discovered_phones;
 var phone_selection = require('./phone_selection.js');
+var phone_events_handling = require('./phone_events_handling.js');
 var associations = require('./associations.js');
 
 var sockets = {};
-sockets.browsers = [];
-sockets.phones = [];
+sockets.browsers = {};
+sockets.phones = {};
 
 function start_handler(io) {
 
@@ -34,13 +35,13 @@ function start_handler(io) {
 			var device_type = device_id[0];
 			if (device_type == config.device_type.browser) {
 				socket.join(config.device_type.browser); // Join browser room
-				sockets.browsers.push({device_id: device_id, socket: socket});
+				sockets.browsers[device_id] = socket;
 				// Send list of discovered phones to new browser
 				socket.emit(config.EVENT_discovered_phones, discovered_phones);
 			}
 			else if (device_type == config.device_type.android) {
 				socket.join(config.device_type.android); // Join android room
-				sockets.phones.push({device_id: device_id, socket: socket});
+				sockets.phones[device_id] = socket;
 			}
 
 			// If a phone sent that, add association between phone and browser
@@ -50,13 +51,12 @@ function start_handler(io) {
 				associations.print_browsers();
 
 				// Send event to browser on which phone has been selected to tell it it can go to the next screen
-				var browser_socket = find_socket_by_id(second_party_id);
-				browser_socket.emit(config.EVENT_phone_connected, {});
+				sockets.browsers[second_party_id].emit(config.EVENT_phone_connected, {});
 				
 			}
 
-			console.log("BROWSERS : " + sockets.browsers.length);
-			console.log("PHONES : " + sockets.phones.length);
+			console.log("BROWSERS : " + Object.keys(sockets.browsers).length);
+			console.log("PHONES : " + Object.keys(sockets.phones).length);
 			console.log("");
 
 		});
@@ -73,26 +73,26 @@ function start_handler(io) {
 		// from array
 		// -------------------------
 		socket.on('disconnect', function() {
-			Object.keys(sockets).forEach(function(key) {
-				for (var i = 0 ; i < sockets[key].length ; i++) {
-					if (sockets[key][i].socket.id == socket.id) { // Socket found
+			Object.keys(sockets).forEach(function(type) {
+				Object.keys(sockets[type]).forEach(function(id) {
+					if (sockets[type][id].id == socket.id) { // Socket found
 
 						// Remove associations
-						if (key == "phones") {
-							associations.remove_phone(sockets[key][i].device_id);
+						if (type == "phones") {
+							associations.remove_phone(id);
 						}
-						else if (key == "browsers") {
-							associations.remove_browser(sockets[key][i].device_id);
+						else if (type == "browsers") {
+							associations.remove_browser(id);
 						}
 
 						// Remove socket
-						sockets[key].splice(i,1);
+						delete sockets[type][id];
 					}
-				}	
+				});	
 			});
 
-			console.log("BROWSERS : " + sockets.browsers.length);
-			console.log("PHONES : " + sockets.phones.length);
+			console.log("BROWSERS : " + Object.keys(sockets.browsers).length);
+			console.log("PHONES : " + Object.keys(sockets.phones).length);
 			console.log("");
 
 			console.log("New associations :");
@@ -107,27 +107,10 @@ function start_handler(io) {
 		// socket
 		// -------------------------
 		phone_selection.apply_listeners(socket);
-		
+		phone_events_handling.apply_listeners(socket);		
 	
 	});
 
-}
-
-function find_socket_by_id(device_id) {
-	var id = device_id.toString();
-
-	var socket;
-
-	Object.keys(sockets).forEach(function(key) {
-		for (var i = 0 ; i < sockets[key].length ; i++) {
-			if (sockets[key][i].device_id == id) {
-				socket = sockets[key][i].socket;
-				return;
-			}
-		}
-	});
-
-	return socket;
 }
 
 module.exports.start_handler = start_handler;
