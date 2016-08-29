@@ -1,3 +1,28 @@
-#sms_screen { 
+html, body {
+	height: 100%;
+}
+
+#sms-screen {
+	height: 100%;
     padding-top: 70px; 
+}
+
+#sms-screen #contact-list-container {
+	height: 100%;
+	margin-left:1px;
+}
+
+#sms-screen #contact-list-container .row {
+	height: 100%;
+}
+
+#contact-list {
+	height: 100%;
+	overflow-y: scroll;
+	margin-bottom:0;
+	padding-right: 1px;
+}
+
+#contact-list a {
+	padding: 5px;
 }

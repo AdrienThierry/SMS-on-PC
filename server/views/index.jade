@@ -2,35 +2,34 @@ extends layout
 
 block content
 
-  div.container
-    // --------------------------------------------------
-    // Alert block for errors
-    // --------------------------------------------------
-    div.alert.alert-danger(role="alert", ng-show="errorVisible")
-      span.glyphicon.glyphicon-exclamation-sign &nbsp;
-      | {{errorMsg}}
+  // --------------------------------------------------
+  // Alert block for errors
+  // --------------------------------------------------
+  div.alert.alert-danger(role="alert", ng-show="errorVisible")
+    span.glyphicon.glyphicon-exclamation-sign &nbsp;
+    | {{errorMsg}}
 
-    // --------------------------------------------------
-    // Discovery screen
-    // --------------------------------------------------
-    div(ng-controller="discoveryController as discovery", ng-show="discovery.show()")
-      div.list-group
-        h1 {{'FC_choose_phone' | translate}}
-        div.row(ng-repeat="phone in discovery.discovered_phones")
-          p.col-md-5 {{phone.name}}
-          a.col-md-1.btn.btn-default(ng-click="discovery.select_phone(discovery.discovered_phones.indexOf(phone))") {{'FC_choose' | translate}}
+  // --------------------------------------------------
+  // Discovery screen
+  // --------------------------------------------------
+  div(ng-controller="discoveryController as discovery", ng-show="discovery.show()")
+    div.container
+      h1 {{'FC_choose_phone' | translate}}
+      div.row(ng-repeat="phone in discovery.discovered_phones")
+        p.col-md-5 {{phone.name}}
+        a.col-md-1.btn.btn-default(ng-click="discovery.select_phone(discovery.discovered_phones.indexOf(phone))") {{'FC_choose' | translate}}
 
 
   // --------------------------------------------------
   // Main screen
   // --------------------------------------------------
-  div#sms_screen(ng-controller="SMSScreenController as sms", ng-show="sms.show()")
+  div#sms-screen(ng-controller="SMSScreenController as sms", ng-show="sms.show()")
     nav.navbar.navbar-default.navbar-fixed-top
       div.container
         div.navbar-header
           a.navbar-brand {{sms.phone_name()}}
 
-    div.container
+    div#contact-list-container.container
       div.row
-        div.list-group.col-md-2
+        div#contact-list.list-group.col-md-2
           a.list-group-item(href="#", ng-repeat="name in sms.contacts") {{name}}
