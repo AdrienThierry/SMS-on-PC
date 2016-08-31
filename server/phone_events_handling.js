@@ -8,7 +8,9 @@ var connection_handling = require('./connection_handling.js');
 
 function apply_listeners(socket) {
 
-	// Contact list received
+	// --------------------------------------------------
+	// On contacts list received
+	// --------------------------------------------------
 	socket.on(config.EVENT_send_contact_list, function(data) {
 		
 		// Send contact list to associated browsers

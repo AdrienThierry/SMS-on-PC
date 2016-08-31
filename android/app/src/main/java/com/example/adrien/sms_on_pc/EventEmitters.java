@@ -6,7 +6,6 @@ package com.example.adrien.sms_on_pc;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +19,10 @@ public class EventEmitters {
     private static Context mContext;
     private static int device_id;
 
+    // --------------------------------------------------
+    // !! TO BE CALLED BEFORE ANY OTHER FUNCTION OF THIS
+    // CLASS !!
+    // --------------------------------------------------
     public static void initialize(Context context) {
         mContext = context;
 
@@ -27,6 +30,9 @@ public class EventEmitters {
         device_id = sharedPref.getInt(Constants.DEVICE_ID_KEY, -1);
     }
 
+    // --------------------------------------------------
+    // Send contacts list to server
+    // --------------------------------------------------
     public static void sendContactList(Socket socket, LinkedHashMap<String, String> contacts) {
         JSONObject config = ConfigParser.getConfig(mContext);
         JSONObject jsonContacts = new JSONObject(contacts);

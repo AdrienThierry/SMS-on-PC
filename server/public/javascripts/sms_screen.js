@@ -13,6 +13,9 @@ angular.module('SMS_on_PC').controller("SMSScreenController", function(constants
 
 		var config = data;
 
+		// --------------------------------------------------
+		// On contact list received
+		// --------------------------------------------------
 		socket.on(config.EVENT_send_contact_list, function(data) {
 			c.contacts = [];
 
@@ -20,8 +23,6 @@ angular.module('SMS_on_PC').controller("SMSScreenController", function(constants
 				c.contacts.push(data[key]);
 				c.contacts.sort();
 			});
-
-			console.log(c.contacts);
 		});
 
 	});
