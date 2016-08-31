@@ -53,6 +53,10 @@ public class ConnectionHandlingService extends Service {
 
             socket.connect();
 
+            Contacts.initialize(getBaseContext());
+            EventEmitters.initialize(getBaseContext());
+            EventListeners.register(getBaseContext(), socket);
+
             // Get shared config
             config = ConfigParser.getConfig(getBaseContext());
 
@@ -103,11 +107,6 @@ public class ConnectionHandlingService extends Service {
             }
 
         }
-
-        // Send contact list to server
-        Contacts.initialize(getBaseContext());
-        EventEmitters.initialize(getBaseContext());
-        EventEmitters.sendContactList(socket, Contacts.getContacts());
 
         return START_REDELIVER_INTENT;
     }

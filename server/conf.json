@@ -8,7 +8,8 @@
 	"EVENT_discovered_phones": "2",
 	"EVENT_select_phone": "3",
 	"EVENT_phone_connected": "4",
-	"EVENT_send_contact_list": "5",
+	"EVENT_ask_contact_list": "5",
+	"EVENT_send_contact_list": "6",
 
 	"device_type": {
 		"browser": "1",

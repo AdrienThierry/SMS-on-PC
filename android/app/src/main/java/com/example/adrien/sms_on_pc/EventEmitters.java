@@ -20,8 +20,8 @@ public class EventEmitters {
     private static int device_id;
 
     // --------------------------------------------------
-    // !! TO BE CALLED BEFORE ANY OTHER FUNCTION OF THIS
-    // CLASS !!
+    // !! MUST BE CALLED BEFORE ANY OTHER FUNCTION OF
+    // THIS CLASS !!
     // --------------------------------------------------
     public static void initialize(Context context) {
         mContext = context;

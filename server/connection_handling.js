@@ -52,6 +52,9 @@ function start_handler(io) {
 
 				// Send event to browser on which phone has been selected to tell it it can go to the next screen
 				sockets.browsers[second_party_id].emit(config.EVENT_phone_connected, {});
+
+				// Ask for contacts list
+				socket.emit(config.EVENT_ask_contact_list, {});
 				
 			}
 
