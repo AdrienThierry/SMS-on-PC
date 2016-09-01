@@ -7,12 +7,12 @@ html, body {
     padding-top: 70px; 
 }
 
-#sms-screen #contact-list-container {
+#sms-screen #sms-container {
 	height: 100%;
 	margin-left:1px;
 }
 
-#sms-screen #contact-list-container .row {
+#sms-screen #sms-container .row {
 	height: 100%;
 }
 
