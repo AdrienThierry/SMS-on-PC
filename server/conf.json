@@ -12,6 +12,7 @@
 	"EVENT_send_contact_list": "6",
 	"EVENT_already_exist": "7",
 	"EVENT_disconnect": "8",
+	"EVENT_ask_SMS": "9",
 
 	"device_type": {
 		"browser": "1",
