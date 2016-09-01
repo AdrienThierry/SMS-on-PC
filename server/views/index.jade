@@ -35,7 +35,7 @@ block content
     div#sms-container.container
       div.row
         div#contact-list.list-group.col-md-2
-          a.list-group-item(href="#", ng-repeat="name in sms.contacts") {{name}}
+          a.list-group-item(href="#", ng-repeat="name in sms.contacts track by $index") {{name}}
         div#sms-list.col-md-8
           p Yolo SMS 1
           p Yolo SMS 2 

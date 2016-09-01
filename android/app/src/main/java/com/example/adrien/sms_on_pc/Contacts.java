@@ -16,6 +16,10 @@ public class Contacts {
 
     private static Context mContext;
 
+    // --------------------------------------------------
+    // !! MUST BE CALLED BEFORE ANY OTHER FUNCTION OF
+    // THIS CLASS !!
+    // --------------------------------------------------
     public static void initialize(Context context) {
         mContext = context;
     }
@@ -27,11 +31,11 @@ public class Contacts {
         LinkedHashMap<String, String> result = new LinkedHashMap<>();
         ContentResolver cr = mContext.getContentResolver();
 
-        Cursor c = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                new String[]{ContactsContract.CommonDataKinds.Phone.RAW_CONTACT_ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME},
+        Cursor c = cr.query(ContactsContract.Contacts.CONTENT_URI,
+                new String[]{ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME},
                 null,
                 null,
-                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"); // Sort order
+                null); // Sort order
 
         int totalContacts = c.getCount();
 
@@ -41,7 +45,7 @@ public class Contacts {
                 c.moveToNext();
             }
         } else {
-            throw new RuntimeException("You have no SMS in Inbox");
+            throw new RuntimeException("Contacts : no match found");
         }
         c.close();
 

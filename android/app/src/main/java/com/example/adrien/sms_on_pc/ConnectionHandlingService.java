@@ -54,6 +54,7 @@ public class ConnectionHandlingService extends Service {
             socket.connect();
 
             Contacts.initialize(getBaseContext());
+            SMS.initialize(getBaseContext());
             EventEmitters.initialize(getBaseContext());
             EventListeners.register(getBaseContext(), socket);
 

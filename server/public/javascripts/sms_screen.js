@@ -21,6 +21,8 @@ angular.module('SMS_on_PC').controller("SMSScreenController", function(constants
 		socket.on(config.EVENT_send_contact_list, function(data) {
 			c.contacts = [];
 
+			console.log(data);
+
 			Object.keys(data).forEach(function(key) {
 				c.contacts.push(data[key]);
 				c.contacts.sort();
