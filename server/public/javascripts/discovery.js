@@ -46,6 +46,17 @@ angular.module('SMS_on_PC').controller("discoveryController", function(constants
 			sharedProperties.set_show_SMS_screen(true);
 		});
 
+		// --------------------------------------------------
+		// On browser already connected
+		// --------------------------------------------------
+		socket.on(config.EVENT_already_exist, function(data) {
+			sharedProperties.set_show_discovery(false);
+			sharedProperties.set_show_SMS_screen(true);
+
+			// Ask for contacts list
+			socket.emit(config.EVENT_ask_contact_list, {device_id: localStorage.getItem(constants.device_id_var_name)});
+		});
+
 
 		// --------------------------------------------------
 		// Send selected phone to server
@@ -53,6 +64,9 @@ angular.module('SMS_on_PC').controller("discoveryController", function(constants
 		c.select_phone = function(index) {
 			socket.emit(config.EVENT_select_phone, {browser_id: localStorage.getItem(constants.device_id_var_name), phone_index: index});
 			sharedProperties.set_phone_name(c.discovered_phones[index].name);
+			
+			// Store phone name in localStorage to keep it in case of disconnect
+			localStorage.setItem(constants.phone_name_var_name, sharedProperties.get_phone_name());
 		};
 	});	
 });

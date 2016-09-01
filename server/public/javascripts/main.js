@@ -96,10 +96,12 @@ app.service('sharedProperties', function () {
 // --------------------------------------------------
 // Main controller
 // --------------------------------------------------
-angular.module('SMS_on_PC').controller("mainController", function($scope, configParser) {
+angular.module('SMS_on_PC').controller("mainController", function($scope, constants, configParser, sharedProperties) {
 
 	// Error message not visible
 	$scope.errorVisible = false;
 	$scope.errorMsg = "";
+
+	sharedProperties.set_phone_name(localStorage.getItem(constants.phone_name_var_name));
 
 });

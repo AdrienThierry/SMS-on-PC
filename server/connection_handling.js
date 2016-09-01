@@ -8,6 +8,7 @@ var discovery = require('./discovery.js');
 var discovered_phones = discovery.discovered_phones;
 var phone_selection = require('./phone_selection.js');
 var phone_events_handling = require('./phone_events_handling.js');
+var browser_events_handling = require('./browser_events_handling.js');
 var associations = require('./associations.js');
 
 var sockets = {};
@@ -36,8 +37,15 @@ function start_handler(io) {
 			if (device_type == config.device_type.browser) {
 				socket.join(config.device_type.browser); // Join browser room
 				sockets.browsers[device_id] = socket;
-				// Send list of discovered phones to new browser
-				socket.emit(config.EVENT_discovered_phones, discovered_phones);
+
+				// If browser already exists
+				if (browser_already_exists(device_id)) {
+					socket.emit(config.EVENT_already_exist, {});
+				}
+				else {
+					// Send list of discovered phones to new browser
+					socket.emit(config.EVENT_discovered_phones, discovered_phones);
+				}
 			}
 			else if (device_type == config.device_type.android) {
 				socket.join(config.device_type.android); // Join android room
@@ -76,17 +84,19 @@ function start_handler(io) {
 		// from array
 		// -------------------------
 		socket.on('disconnect', function() {
+			console.log("DISCONNECT");
+
 			Object.keys(sockets).forEach(function(type) {
 				Object.keys(sockets[type]).forEach(function(id) {
 					if (sockets[type][id].id == socket.id) { // Socket found
 
 						// Remove associations
-						if (type == "phones") {
-							associations.remove_phone(id);
-						}
-						else if (type == "browsers") {
-							associations.remove_browser(id);
-						}
+//						if (type == "phones") {
+//							associations.remove_phone(id);
+//						}
+//						else if (type == "browsers") {
+//							associations.remove_browser(id);
+//						}
 
 						// Remove socket
 						delete sockets[type][id];
@@ -110,10 +120,23 @@ function start_handler(io) {
 		// socket
 		// -------------------------
 		phone_selection.apply_listeners(socket);
-		phone_events_handling.apply_listeners(socket);		
+		phone_events_handling.apply_listeners(socket);
+		browser_events_handling.apply_listeners(socket);		
 	
 	});
 
+}
+
+// --------------------------------------------------
+// Function to check if a browser already exists
+// --------------------------------------------------
+function browser_already_exists(device_id) {
+	if (associations.get_phones(device_id) != undefined) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 module.exports.start_handler = start_handler;
