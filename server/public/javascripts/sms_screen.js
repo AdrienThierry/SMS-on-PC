@@ -9,6 +9,8 @@ angular.module('SMS_on_PC').controller("SMSScreenController", function(constants
 	c.show = sharedProperties.get_show_SMS_screen;
 	c.phone_name = sharedProperties.get_phone_name;
 
+	socket.emit("yolo", {});
+
 	configParser.getConf().then(function(data) {
 
 		var config = data;
@@ -24,6 +26,17 @@ angular.module('SMS_on_PC').controller("SMSScreenController", function(constants
 				c.contacts.sort();
 			});
 		});
+
+		// --------------------------------------------------
+		// Disconnect
+		// --------------------------------------------------
+		c.disconnect = function() {
+			var device_id = localStorage.getItem(constants.device_id_var_name);
+			socket.emit(config.EVENT_disconnect, {device_id: device_id});
+
+			sharedProperties.set_show_discovery(true);
+			sharedProperties.set_show_SMS_screen(false);
+		};
 
 	});
 

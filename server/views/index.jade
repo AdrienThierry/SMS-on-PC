@@ -28,6 +28,9 @@ block content
       div.container
         div.navbar-header
           a.navbar-brand {{sms.phone_name()}}
+        div.navbar-btn.navbar-right
+          a.btn.btn-link(href="#", ng-click="sms.disconnect()")
+            span.glyphicon.glyphicon-off
 
     div#contact-list-container.container
       div.row

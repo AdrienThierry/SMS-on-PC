@@ -9,6 +9,7 @@ var discovered_phones = discovery.discovered_phones;
 var phone_selection = require('./phone_selection.js');
 var phone_events_handling = require('./phone_events_handling.js');
 var browser_events_handling = require('./browser_events_handling.js');
+var common_events_handling = require('./common_events_handling.js');
 var associations = require('./associations.js');
 
 var sockets = {};
@@ -84,19 +85,9 @@ function start_handler(io) {
 		// from array
 		// -------------------------
 		socket.on('disconnect', function() {
-			console.log("DISCONNECT");
-
 			Object.keys(sockets).forEach(function(type) {
 				Object.keys(sockets[type]).forEach(function(id) {
 					if (sockets[type][id].id == socket.id) { // Socket found
-
-						// Remove associations
-//						if (type == "phones") {
-//							associations.remove_phone(id);
-//						}
-//						else if (type == "browsers") {
-//							associations.remove_browser(id);
-//						}
 
 						// Remove socket
 						delete sockets[type][id];
@@ -121,7 +112,8 @@ function start_handler(io) {
 		// -------------------------
 		phone_selection.apply_listeners(socket);
 		phone_events_handling.apply_listeners(socket);
-		browser_events_handling.apply_listeners(socket);		
+		browser_events_handling.apply_listeners(socket);
+		common_events_handling.apply_listeners(socket);	
 	
 	});
 
