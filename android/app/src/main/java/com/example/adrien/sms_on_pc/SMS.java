@@ -52,8 +52,8 @@ public class SMS {
 
         ArrayList<ArrayList<String>> result = new ArrayList<>();
 
-        result.add(lstSms);
         result.add(lstPeople);
+        result.add(lstSms);
 
         return result;
     }

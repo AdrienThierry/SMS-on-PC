@@ -4,7 +4,6 @@
 
 package com.example.adrien.sms_on_pc;
 
-import android.app.usage.UsageEvents;
 import android.content.Context;
 
 import org.json.JSONException;
@@ -34,7 +33,7 @@ public class EventListeners {
             socket.on(config.getString("EVENT_ask_contact_list"), new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
-                    EventEmitters.sendContactList(mSocket, Contacts.getContacts());
+                    EventEmitters.sendContactList(mSocket, Contacts.getContactsWithMessages());
                 }
             });
         } catch (JSONException e) {

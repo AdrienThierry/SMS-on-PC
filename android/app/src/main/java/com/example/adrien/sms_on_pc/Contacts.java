@@ -9,7 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class Contacts {
@@ -22,6 +22,27 @@ public class Contacts {
     // --------------------------------------------------
     public static void initialize(Context context) {
         mContext = context;
+    }
+
+    // --------------------------------------------------
+    // Get HashMap of contacts which have messages
+    // --------------------------------------------------
+    public static LinkedHashMap<String, String> getContactsWithMessages() {
+
+        ArrayList<ArrayList<String>> sms = SMS.getAllSms();
+        LinkedHashMap<String, String> contacts = Contacts.getContacts();
+
+        LinkedHashMap<String, String> result = new LinkedHashMap<>();
+
+        // Iterate through sms and create hashmap of contacts who have messages
+        for (int i = 0 ; i < sms.get(0).size() ; i++) {
+
+            if (contacts.get(sms.get(0).get(i)) != null) {
+                result.put(sms.get(0).get(i), contacts.get(sms.get(0).get(i)));
+            }
+        }
+
+        return result;
     }
 
     // --------------------------------------------------
