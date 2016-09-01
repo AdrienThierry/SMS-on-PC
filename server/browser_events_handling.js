@@ -23,6 +23,22 @@ function apply_listeners(socket) {
 		
 	});
 
+	// --------------------------------------------------
+	// On SMS asked
+	// --------------------------------------------------
+	socket.on(config.EVENT_ask_SMS_list, function(data) {
+
+		// Send request to associated phones
+		var sockets = connection_handling.sockets;
+		var phone_ids = associations.get_phones(data.device_id);
+
+		for (var i = 0 ; i < phone_ids.length ; i++) {
+			var json = {browser_id: data.device_id, contact_id: data.contact_id}
+			sockets.phones[phone_ids[i]].emit(config.EVENT_ask_SMS_list, json);
+		}
+		
+	});
+
 }
 
 module.exports.apply_listeners = apply_listeners;

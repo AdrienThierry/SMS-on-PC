@@ -99,7 +99,7 @@ function start_handler(io) {
 			console.log("PHONES : " + Object.keys(sockets.phones).length);
 			console.log("");
 
-			console.log("New associations :");
+			console.log("Associations after disconnect :");
 			associations.print_phones();
 			associations.print_browsers();
 			

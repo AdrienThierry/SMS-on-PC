@@ -37,5 +37,4 @@ block content
         div#contact-list.list-group.col-md-2
           a.list-group-item(href="#", ng-class="{active: $index == sms.active_contact}", ng-repeat="name in sms.contact_names track by $index", ng-click="sms.set_active_contact($index)") {{name}}
         div#sms-list.col-md-8
-          p Yolo SMS 1
-          p Yolo SMS 2 
+          p(ng-repeat="msg in sms.sms_list") {{msg.text}}

@@ -40,15 +40,21 @@ angular.module('SMS_on_PC').controller("SMSScreenController", function(constants
 		});
 
 		// --------------------------------------------------
+		// On SMS list received
+		// --------------------------------------------------
+		socket.on(config.EVENT_send_SMS_list, function(data) {
+			c.sms_list = data;
+		});
+
+		// --------------------------------------------------
 		// Set active contact and get sms from it
 		// --------------------------------------------------
 		c.set_active_contact = function(index) {
 			c.active_contact = index;
 
 			var json = {device_id: device_id, contact_id: c.contacts[index][0]}
-			console.log(json);
 
-			socket.emit(config.EVENT_ask_SMS, json);
+			socket.emit(config.EVENT_ask_SMS_list, json);
 		};
 
 		// --------------------------------------------------
