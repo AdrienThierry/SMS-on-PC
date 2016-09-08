@@ -21,21 +21,21 @@ public class EventListeners {
     public static void register(Context context, Socket socket) {
         mContext = context;
         config = ConfigParser.getConfig(mContext);
-        register_ask_contact_list(socket);
+        register_ask_address_list(socket);
         register_ask_sms_list(socket);
     }
 
     // --------------------------------------------------
-    // On contacts list asked by server
+    // On address list asked by server
     // --------------------------------------------------
-    private static void register_ask_contact_list(Socket socket) {
+    private static void register_ask_address_list(Socket socket) {
         final Socket mSocket = socket;
 
         try {
-            socket.on(config.getString("EVENT_ask_contact_list"), new Emitter.Listener() {
+            socket.on(config.getString("EVENT_ask_address_list"), new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
-                    EventEmitters.sendContactList(mSocket, Contacts.getContactsWithMessages());
+                    EventEmitters.sendAddressList(mSocket, SMS.getAddresses());
                 }
             });
         } catch (JSONException e) {
@@ -56,9 +56,9 @@ public class EventListeners {
                     JSONObject data = (JSONObject)args[0];
 
                     try {
-                        int contactID = Integer.parseInt(data.getString("contact_id"));
+                        String address = data.getString("address");
                         String browserID = data.getString("browser_id");
-                        EventEmitters.sendSMSList(mSocket, browserID, SMS.getAllSmsFromContact(contactID));
+                        EventEmitters.sendSMSList(mSocket, browserID, SMS.getAllSmsFromAddress(address));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

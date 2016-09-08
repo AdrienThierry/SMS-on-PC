@@ -9,16 +9,16 @@ var connection_handling = require('./connection_handling.js');
 function apply_listeners(socket) {
 
 	// --------------------------------------------------
-	// On contacts list asked
+	// On address list asked
 	// --------------------------------------------------
-	socket.on(config.EVENT_ask_contact_list, function(data) {
+	socket.on(config.EVENT_ask_address_list, function(data) {
 		
 		// Send request to associated phones
 		var sockets = connection_handling.sockets;
 		var phone_ids = associations.get_phones(data.device_id);
 
 		for (var i = 0 ; i < phone_ids.length ; i++) {
-			sockets.phones[phone_ids[i]].emit(config.EVENT_ask_contact_list, {});
+			sockets.phones[phone_ids[i]].emit(config.EVENT_ask_address_list, {});
 		}
 		
 	});
@@ -33,7 +33,7 @@ function apply_listeners(socket) {
 		var phone_ids = associations.get_phones(data.device_id);
 
 		for (var i = 0 ; i < phone_ids.length ; i++) {
-			var json = {browser_id: data.device_id, contact_id: data.contact_id}
+			var json = {browser_id: data.device_id, address: data.address}
 			sockets.phones[phone_ids[i]].emit(config.EVENT_ask_SMS_list, json);
 		}
 		

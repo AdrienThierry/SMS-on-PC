@@ -14,6 +14,8 @@
 	"EVENT_disconnect": "8",
 	"EVENT_ask_SMS_list": "9",
 	"EVENT_send_SMS_list": "10",
+	"EVENT_ask_address_list": "11",
+	"EVENT_send_address_list": "12",
 
 	"device_type": {
 		"browser": "1",

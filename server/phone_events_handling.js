@@ -11,15 +11,15 @@ function apply_listeners(socket) {
 	var sockets = connection_handling.sockets;
 
 	// --------------------------------------------------
-	// On contacts list received
+	// On address list received
 	// --------------------------------------------------
-	socket.on(config.EVENT_send_contact_list, function(data) {
-		
-		// Send contact list to associated browsers
+	socket.on(config.EVENT_send_address_list, function(data) {
+
+		// Send address list to associated browsers
 		var browser_ids = associations.get_browsers(data.device_id);
 
 		for (var i = 0 ; i < browser_ids.length ; i++) {
-			sockets.browsers[browser_ids[i]].emit(config.EVENT_send_contact_list, data.contacts);
+			sockets.browsers[browser_ids[i]].emit(config.EVENT_send_address_list, data.addresses);
 		}
 		
 	});

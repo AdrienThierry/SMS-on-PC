@@ -53,8 +53,8 @@ angular.module('SMS_on_PC').controller("discoveryController", function(constants
 			sharedProperties.set_show_discovery(false);
 			sharedProperties.set_show_SMS_screen(true);
 
-			// Ask for contacts list
-			socket.emit(config.EVENT_ask_contact_list, {device_id: localStorage.getItem(constants.device_id_var_name)});
+			// Ask for address list
+			socket.emit(config.EVENT_ask_address_list, {device_id: localStorage.getItem(constants.device_id_var_name)});
 		});
 
 

@@ -7,6 +7,7 @@ package com.example.adrien.sms_on_pc;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,6 +33,23 @@ public class EventEmitters {
         device_id = sharedPref.getInt(Constants.DEVICE_ID_KEY, -1);
 
         config = ConfigParser.getConfig(mContext);
+    }
+
+    // --------------------------------------------------
+    // Send address list to server
+    // --------------------------------------------------
+    public static void sendAddressList(Socket socket, ArrayList<String> addresses) {
+        JSONObject json = new JSONObject();
+
+        JSONArray jsonAddresses = new JSONArray(addresses);
+
+        try {
+            json.put("device_id", device_id);
+            json.put("addresses", jsonAddresses);
+            socket.emit(config.getString("EVENT_send_address_list"), json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     // --------------------------------------------------
