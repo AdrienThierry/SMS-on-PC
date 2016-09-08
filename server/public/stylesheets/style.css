@@ -9,7 +9,6 @@ html, body {
 
 #sms-screen #sms-container {
 	height: 100%;
-	margin-left:1px;
 }
 
 #sms-screen #sms-container .row {
@@ -25,4 +24,9 @@ html, body {
 
 #contact-list a {
 	padding: 5px;
+}
+
+#sms-list {
+	height: 100%;
+	overflow-y: scroll;
 }
