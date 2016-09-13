@@ -35,6 +35,6 @@ block content
     div#sms-container.container
       div.row
         div#contact-list.list-group.col-md-2
-          a.list-group-item(href="#", ng-class="{active: $index == sms.active_address}", ng-repeat="address in sms.addresses track by $index", ng-click="sms.set_active_address($index)") {{address}}
+          a.list-group-item(href="#", ng-class="{active: $index == sms.active_address}", ng-repeat="address in sms.addresses_names track by $index", ng-click="sms.set_active_address($index)") {{address}}
         div#sms-list.col-md-8
           p(ng-repeat="msg in sms.sms_list") {{msg.text}}

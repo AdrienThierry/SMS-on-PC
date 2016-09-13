@@ -10,6 +10,8 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
@@ -35,7 +37,8 @@ public class EventListeners {
             socket.on(config.getString("EVENT_ask_address_list"), new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
-                    EventEmitters.sendAddressList(mSocket, SMS.getAddresses());
+                    ArrayList<String> addresses = SMS.getAddresses();
+                    EventEmitters.sendAddressList(mSocket, addresses, SMS.getNames(addresses));
                 }
             });
         } catch (JSONException e) {

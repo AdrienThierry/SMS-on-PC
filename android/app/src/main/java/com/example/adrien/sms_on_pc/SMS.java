@@ -60,6 +60,24 @@ public class SMS {
     }
 
     // --------------------------------------------------
+    // Get contact names associated with addresses
+    // --------------------------------------------------
+    public static HashMap<String, String> getNames(ArrayList<String> addresses) {
+        HashMap<String, String> result = new HashMap<>();
+
+        for (int i = 0 ; i < addresses.size() ; i++) {
+            String currentAddress = addresses.get(i);
+            String currentContactName = Contacts.getContactName(currentAddress);
+
+            if (currentContactName != null) {
+                result.put(currentAddress, currentContactName);
+            }
+        }
+
+        return result;
+    }
+
+    // --------------------------------------------------
     // Get all addresses
     // --------------------------------------------------
     public static ArrayList<String> getAddresses() {

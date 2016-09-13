@@ -19,7 +19,8 @@ function apply_listeners(socket) {
 		var browser_ids = associations.get_browsers(data.device_id);
 
 		for (var i = 0 ; i < browser_ids.length ; i++) {
-			sockets.browsers[browser_ids[i]].emit(config.EVENT_send_address_list, data.addresses);
+			var json = {addresses: data.addresses, names: data.names};
+			sockets.browsers[browser_ids[i]].emit(config.EVENT_send_address_list, json);
 		}
 		
 	});

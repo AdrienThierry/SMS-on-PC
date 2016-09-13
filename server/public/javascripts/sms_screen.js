@@ -44,12 +44,20 @@ angular.module('SMS_on_PC').controller("SMSScreenController", function(constants
 		// --------------------------------------------------
 		socket.on(config.EVENT_send_address_list, function(data) {
 
-			console.log(data);
-
+			c.addresses_names = [];
 			c.addresses = [];
 
-			for (var id in data) {
-      			c.addresses.push(data[id]);
+			for (var id in data.addresses) {
+				var currentAddress = data.addresses[id];
+
+				// Look for name associated with address
+				if (data.names[currentAddress] != undefined) {
+					c.addresses_names.push(data.names[currentAddress]);
+				}
+				else {
+      				c.addresses_names.push(currentAddress);
+				}
+				c.addresses.push(currentAddress);
 			}
 
 			c.set_active_address(0); // Ask for sms

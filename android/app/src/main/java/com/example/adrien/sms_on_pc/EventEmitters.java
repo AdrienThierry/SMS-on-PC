@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import io.socket.client.Socket;
@@ -38,7 +39,7 @@ public class EventEmitters {
     // --------------------------------------------------
     // Send address list to server
     // --------------------------------------------------
-    public static void sendAddressList(Socket socket, ArrayList<String> addresses) {
+    public static void sendAddressList(Socket socket, ArrayList<String> addresses, HashMap<String, String> names) {
         JSONObject json = new JSONObject();
 
         JSONArray jsonAddresses = new JSONArray(addresses);
@@ -46,6 +47,7 @@ public class EventEmitters {
         try {
             json.put("device_id", device_id);
             json.put("addresses", jsonAddresses);
+            json.put("names", new JSONObject(names));
             socket.emit(config.getString("EVENT_send_address_list"), json);
         } catch (JSONException e) {
             e.printStackTrace();
